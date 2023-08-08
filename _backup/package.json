@@ -1,0 +1,24 @@
+{
+  "name": "three-fonts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev:fe": "npm --prefix ./fe run build:watch",
+    "dev:be": "npm --prefix ./be run start:dev",
+    "dev": "concurrently 'npm:dev:*'",
+    "clean": "rimraf dist",
+    "build:fe": "npm --prefix ./fe run build",
+    "build:be": "npm --prefix ./be run build",
+    "build:copy": "copyfiles -u 1 \"./be/node_modules/**/*.*\" dist",
+    "build": "npm run clean && concurrently 'npm:build:*'"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.0",
+    "copyfiles": "^2.4.1",
+    "rimraf": "^5.0.1"
+  }
+}
