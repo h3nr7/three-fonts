@@ -57,10 +57,8 @@ export function FontConverter({
       <Form 
         onSubmit={submitHandler}
         onReset={() => onReset()}>
-        <CardHeader>
-          <Heading level={2} weight={400}>Font converter</Heading>
-        </CardHeader>
-        <CardBody gap='medium' pad={{ vertical: 'medium' }}>
+
+        <CardBody gap='medium' pad={{ bottom: 'small', top: 'large' }}>
           <FormField 
             direction="column" 
             name="name" 
@@ -72,7 +70,7 @@ export function FontConverter({
             />
           </FormField>
         </CardBody>
-        <CardFooter justify='end'>
+        <CardFooter justify='end' pad={{ bottom: 'medium' }}>
           <Box direction='row-reverse' gap='small'>
             <Button type='reset' label='reset' />
             <Button type='submit' primary label='Convert' />

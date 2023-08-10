@@ -4,6 +4,7 @@ import { Converter } from './pages/Converter';
 import { Display } from './pages/Display';
 import { Theme } from './Theme';
 import { Grid, Header, Main, Text } from 'grommet';
+import { ThreeFiber } from './three/ThreeFiber';
 
 
 function App() {
@@ -11,8 +12,10 @@ function App() {
 
   return (
     <Theme>
-      <Grid fill alignSelf='stretch'>
+      <Grid fill alignSelf='stretch' style={{ zIndex: 1, position: 'relative' }}>
         <Header 
+          className='navi__container'
+          sticky='scrollup'
           direction='row'
           background="dark-1"
           pad={{ vertical:'small', horizontal:'medium' }}>
@@ -27,6 +30,7 @@ function App() {
           </BrowserRouter>
         </Main>
       </Grid>
+      <ThreeFiber />
     </Theme>
   )
 }

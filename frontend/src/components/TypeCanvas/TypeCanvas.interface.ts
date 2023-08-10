@@ -1,7 +1,10 @@
 import { Glyph } from "opentype.js"
+import { FontObject } from "../FontGrid/FontGrid.interface"
 
 export interface TypeCanvasProps {
-  width: number
-  height: number
   glyph?: Glyph
+  fontSize?: number
+  fontObj: FontObject
+  pad?: number
+  color?: string
 }
