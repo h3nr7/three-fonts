@@ -1,9 +1,10 @@
 import { 
-  Controller, Get, Post, Body,
-  UseInterceptors,
+  Controller, Get, Post, Body, Query,
+  UseInterceptors, StreamableFile ,
   UploadedFile,
   ParseFilePipeBuilder
 } from '@nestjs/common';
+import { Readable } from 'node:stream'
 import { AppService } from './app.service';
 import { FontResponse } from './app.interface';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -12,24 +13,21 @@ import { FileInterceptor } from '@nestjs/platform-express';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Post('api/fonts/upload')
+  @Post('api/fonts/convert')
   @UseInterceptors(FileInterceptor('file'))
-  async upload(
+  async convert(
     @UploadedFile(
       new ParseFilePipeBuilder()
-        .addFileTypeValidator({
-          fileType: /(ttf|woff|woff2)$/
-        })
         .build({
           fileIsRequired: true
         })
     ) file:Express.Multer.File
-  ): Promise<FontResponse> {
-    const font = await this.appService.convertToFont(file.buffer);
-    
-    console.log(font.toTables())
+  ): Promise<FontResponse | StreamableFile > {
 
-    return font.toTables()
+    // convert to type font
+    const font = await this.appService.convertToFont(file.buffer);
+    console.log(font);
+    return new StreamableFile(new Uint8Array(font.toArrayBuffer()));
   
   }
 

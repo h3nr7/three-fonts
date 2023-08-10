@@ -1,34 +1,33 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import './App.scss'
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Converter } from './pages/Converter';
+import { Display } from './pages/Display';
+import { Theme } from './Theme';
+import { Grid, Header, Main, Text } from 'grommet';
+
 
 function App() {
-  const [count, setCount] = useState(0)
+
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <Theme>
+      <Grid fill alignSelf='stretch'>
+        <Header 
+          direction='row'
+          background="dark-1"
+          pad={{ vertical:'small', horizontal:'medium' }}>
+          <Text size='medium'>h3nr7 . 3Fonts</Text>
+        </Header>
+        <Main pad='xlarge'>
+          <BrowserRouter basename='/'>
+            <Routes>
+              <Route index element={<Converter />} />
+              <Route path='display' element={<Display />} />
+            </Routes>
+          </BrowserRouter>
+        </Main>
+      </Grid>
+    </Theme>
   )
 }
 

@@ -1,0 +1,1 @@
+export { TypeCanvas } from './TypeCanvas'
