@@ -1,9 +1,28 @@
 .typecanvas {
   &__container {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100px;
     height: 100px;
+  }
+
+  &__info {
+    display: flex;
+    align-items: end;
+    justify-content: flex-end;
+    box-sizing: content-box;
+    position: absolute;;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    font-size: 10px;
+    transition: opacity 200ms;;
+    &:hover {
+      opacity: 1;
+    }
   }
 }

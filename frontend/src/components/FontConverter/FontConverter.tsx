@@ -10,7 +10,7 @@ export function FontConverter({
 }:React.PropsWithChildren<FontConverterProps>) {
 
   const [file, setFile] = React.useState<File>()
-
+  
   /**
    * input handler
    * @param e 
@@ -53,7 +53,10 @@ export function FontConverter({
   }
 
   return (
-    <Card pad={{horizontal: 'large', bottom: 'medium'}} gap='medium' background="dark-1">
+    <Card 
+      pad={{horizontal: 'large', bottom: 'medium'}} 
+      gap='medium' 
+      background="dark-1">
       <Form 
         onSubmit={submitHandler}
         onReset={() => onReset()}>

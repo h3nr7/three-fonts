@@ -9,13 +9,13 @@ export function TypeCanvas({
 }: PropsWithChildren<TypeCanvasProps>) {
 
   const ref = useRef<HTMLCanvasElement>(null);
-  
+
   const [padding, setPadding] = useState(pad);
   const [divStyle, setDivStyle] = useState<React.CSSProperties>();
 
   useEffect(() => {
     if(!glyph) return;
-
+    
     const { ascender, descender, unitsPerEm } = fontObj;
     const glyphPath = glyph.getPath(0, -ascender);
 
@@ -50,6 +50,9 @@ export function TypeCanvas({
   return (
     <div className='typecanvas__container'>
       <div style={divStyle}/>
+      <div className='typecanvas__info' >
+        {glyph?.unicode} ({glyph?.name})
+      </div>
     </div>
   )
 }
