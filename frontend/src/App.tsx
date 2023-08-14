@@ -49,7 +49,8 @@ function App() {
           >
             <Routes location={location}>
               <Route path='convert' element={<Converter />} />
-              <Route index element={<Display />} />
+              <Route path='display' element={<Display />} />
+              <Route index />
             </Routes>
           </CSSTransition>
         </TransitionGroup>
