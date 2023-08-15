@@ -28,6 +28,7 @@ export function FontGrid({ font }: PropsWithChildren<FontGridProps>) {
   }, [font]);
 
   console.log(font?.names);
+  console.log(font);
 
   return font ? (
     <Card pad={{horizontal: 'large', bottom: 'medium'}} gap='small' background="dark-1">

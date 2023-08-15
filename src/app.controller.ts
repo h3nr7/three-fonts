@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { Readable } from 'node:stream'
 import { readdir, readFile } from 'node:fs/promises'
-import { AppService } from './app.service';
+import { AppService, convertFontToJson } from './app.service';
 import { FontResponse } from './app.interface';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { join } from 'node:path';
@@ -41,6 +41,19 @@ export class AppController {
 
   @Get('api/fonts/json')
   async getOneJson(
+    @Query('name') name:string
+  ) {
+    const filePath = join(__dirname, '..', 'public/fonts', name);
+    console.log('hahaha: ', filePath);
+    const fileBuffer = await readFile(filePath);
+    const fontJson = await this.appService.convertToFont(fileBuffer);
+    // return json string
+    return convertFontToJson(fontJson);
+  }
+
+
+  @Get('api/fonts/data')
+  async getOneFontData(
     @Query('name') name:string
   ) {
     const filePath = join(__dirname, '..', 'public/fonts', name);

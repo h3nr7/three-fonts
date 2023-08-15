@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { FontConvertError } from "../libs/Errors";
 
 
-export function useFont(name: string) {
+export function useFont(name: string):[Font | undefined, FontConvertError | undefined] {
 
   const [font, setFont] = useState<Font>();
   const [error, setErr] = useState<Error>();
@@ -31,5 +31,5 @@ export function useFont(name: string) {
     load();
   }, [name]);
 
-  return {font, error};
+  return [font, error];
 }

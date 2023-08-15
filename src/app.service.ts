@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Font, parse } from 'opentype.js';
+import { convert } from './libs/font_json_converter';
 import { decompress } from 'wawoff2';
 import { fromBuffer } from 'file-type'
 @Injectable()
@@ -10,7 +11,7 @@ export class AppService {
    * @param buffer 
    * @returns 
    */
-  async convertToFont(buffer:Buffer): Promise<Font> {
+  async convertToFont(buffer:Buffer, isJson: boolean = false): Promise<Font> {
     try {
 
       const fileType = await fromBuffer(buffer);
@@ -29,6 +30,7 @@ export class AppService {
           // byteLength to compute the actual data
           const aBuf = buffer.buffer.slice(buffer.byteOffset, buffer.byteLength + buffer.byteOffset);
           font = await parse(aBuf);
+
           break;
         default:
           throw new Error(`file type ${fileType.ext} is not supported`);
@@ -42,4 +44,8 @@ export class AppService {
     }
   }
 
+}
+
+export function convertFontToJson(font:Font) {
+  return  convert(font);
 }
