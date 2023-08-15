@@ -1,10 +1,12 @@
 import { Font, parse } from "opentype.js";
 import { useEffect, useState } from "react";
 import { FontConvertError } from "../libs/Errors";
+import { LoadingManager } from "three";
+import { FontLoader } from "../three/loaders/FontLoader";
 
+export function useFont(name: string, isJson:boolean = false):[Font | undefined, any | undefined, FontConvertError | undefined] {
 
-export function useFont(name: string):[Font | undefined, FontConvertError | undefined] {
-
+  const [json, setJson] = useState<any>();
   const [font, setFont] = useState<Font>();
   const [error, setErr] = useState<Error>();
 
@@ -12,7 +14,7 @@ export function useFont(name: string):[Font | undefined, FontConvertError | unde
   useEffect(() => {
     async function load() {
       try {
-        const url = `/api/fonts/json?name=${name}`
+        const url = `/api/fonts/${isJson ? 'json' : 'data'}?name=${name}`
         const res = await fetch(url, {
           method: 'get',
           headers: {
@@ -20,9 +22,17 @@ export function useFont(name: string):[Font | undefined, FontConvertError | unde
           }
         });
 
-        const arrBuff = await res.arrayBuffer();
-        const f = await parse(arrBuff);
-        setFont(f);
+        if(isJson) {
+          const j = await res.json();
+          const loadingManager = new LoadingManager();
+          const loader = new FontLoader(loadingManager);
+          const jsonFont = loader.parse(j);
+          setJson(jsonFont);
+        } else {
+          const arrBuff = await res.arrayBuffer();
+          const f = await parse(arrBuff);
+          setFont(f);
+        }
       } catch(e) {
          setErr(new FontConvertError((e as Error)?.message || 'Error loading fonts'));
       }
@@ -31,5 +41,5 @@ export function useFont(name: string):[Font | undefined, FontConvertError | unde
     load();
   }, [name]);
 
-  return [font, error];
+  return [font, json, error];
 }

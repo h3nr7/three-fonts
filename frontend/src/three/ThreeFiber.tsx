@@ -1,4 +1,4 @@
-import { Canvas } from '@react-three/fiber';
+import { Canvas, Object3DNode, extend } from '@react-three/fiber';
 import { 
   CameraControls,
   Backdrop, BakeShadows, Box, 
@@ -8,6 +8,14 @@ import { Suspense, useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useFontStore } from '../stores/fontStore';
 import { Fontface } from './Elements/Fontface/Fontface';
+import { TextGeometry } from './Geometry/TextGeometry';
+extend({ TextGeometry });
+
+declare module "@react-three/fiber" {
+  interface ThreeElements {
+    textGeometry: Object3DNode<TextGeometry, typeof TextGeometry>;
+  }
+}
 
 const DEG45 = Math.PI / 4;
 
@@ -15,7 +23,9 @@ export function ThreeFiber() {
 
   const camControlRef = useRef<CameraControls>(null);
   const location = useLocation();
-  const { font } = useFontStore();
+  const { font, json } = useFontStore();
+
+  console.log('json: ', json);
 
   useEffect(() => {
     camControlRef.current?.rotate(DEG45, 0, true);
@@ -35,6 +45,10 @@ export function ThreeFiber() {
         <CameraControls ref={camControlRef}/>
         <OrbitControls autoRotateSpeed={0.85} zoomSpeed={0.75} minPolarAngle={Math.PI / 2.5} maxPolarAngle={Math.PI / 2.55} />
         <Fontface font={font} />
+        <mesh>
+          <textGeometry args={['HENRY', { font: json, size: 1, height: 0.5, bevelEnabled: true, bevelSize: 0.01, bevelThickness: 0.05 }]}/>
+          <meshPhysicalMaterial roughness={0} color={'red'} emissive={'green'} envMapIntensity={0.2} />
+        </mesh>
         <hemisphereLight intensity={0.5} color="white" groundColor="black" />
         {/* <Sphere color="white" amount={50} emissive='green' glow='lightgreen' position={[1, 1, -1]} /> */}
         {/* <Environment preset="city" ground={{ height: 5, radius: 40, scale: 20 }} /> */}

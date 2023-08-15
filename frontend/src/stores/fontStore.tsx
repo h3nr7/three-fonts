@@ -3,21 +3,26 @@ import { createContext, PropsWithChildren, useContext, useReducer, useState } fr
 
 interface IFontStates {
   font?: Font
+  json?: any
   setFont: (font:Font) => void
+  setJson: (json:any) => void
 }
 
 const FontContext = createContext<IFontStates>({
-  setFont: () => {}
+  setFont: () => {},
+  setJson: () => {}
 });
 
 export function FontStoreProvider({ children }: PropsWithChildren) {
   
-  const [font, setStoreState] = useState<Font>();
+  const [font, setFontState] = useState<Font>();
+  const [json, setJsonState] = useState<any>();
 
-  const setFont = (font: Font) => setStoreState(font);
+  const setFont = (font: Font) => setFontState(font);
+  const setJson = (json: any) => setJsonState(json);
 
   return (
-    <FontContext.Provider value={{font, setFont}}>{children}</FontContext.Provider>
+    <FontContext.Provider value={{font, json, setFont, setJson}}>{children}</FontContext.Provider>
   );
 }
 
