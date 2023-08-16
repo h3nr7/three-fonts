@@ -3,12 +3,15 @@ import {
   CameraControls,
   Backdrop, BakeShadows, Box, 
   ContactShadows, Environment, OrbitControls, 
-  Shadow, Sparkles } from '@react-three/drei';
+  Shadow, Sparkles, Grid, AccumulativeShadows, RandomizedLight } from '@react-three/drei';
 import { Suspense, useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useFontStore } from '../stores/fontStore';
 import { Fontface } from './Elements/Fontface/Fontface';
 import { TextGeometry } from './Geometry/TextGeometry';
+import { Texter } from './Elements/Texter/Texter';
+import { Vector3 } from 'three';
+import { attach } from '@react-three/fiber/dist/declarations/src/core/utils';
 extend({ TextGeometry });
 
 declare module "@react-three/fiber" {
@@ -23,9 +26,6 @@ export function ThreeFiber() {
 
   const camControlRef = useRef<CameraControls>(null);
   const location = useLocation();
-  const { font, json } = useFontStore();
-
-  console.log('json: ', json);
 
   useEffect(() => {
     camControlRef.current?.rotate(DEG45, 0, true);
@@ -36,24 +36,24 @@ export function ThreeFiber() {
       <Canvas 
         shadows
         frameloop="demand"
-        camera={{ position: [0, -15, 12], fov: 30 }}
+        camera={{ position: [0, -70, 12], fov: 10, zoom: 1 }}
         style={{
           position: 'fixed', top: '0px', left: '0px',
           width: '100vw', height: '100vh',
           zIndex: 0
         }} >
+        <color args={['#ffffff']} attach='background' />
         <CameraControls ref={camControlRef}/>
         <OrbitControls autoRotateSpeed={0.85} zoomSpeed={0.75} minPolarAngle={Math.PI / 2.5} maxPolarAngle={Math.PI / 2.55} />
-        <Fontface font={font} />
-        <mesh>
-          <textGeometry args={['HENRY', { font: json, size: 1, height: 0.5, bevelEnabled: true, bevelSize: 0.01, bevelThickness: 0.05 }]}/>
-          <meshPhysicalMaterial roughness={0} color={'red'} emissive={'green'} envMapIntensity={0.2} />
-        </mesh>
-        <hemisphereLight intensity={0.5} color="white" groundColor="black" />
+        <Texter position={new Vector3(0, 0.5, 0)}/>
+        <AccumulativeShadows frames={100} alphaTest={0.85} opacity={0.8} color="white" scale={200} position={[0, -0.005, 0]}>
+          <RandomizedLight amount={8} radius={6} ambient={0.5} intensity={1} position={[-1.5, 2.5, -2.5]} bias={0.001} />
+        </AccumulativeShadows>
+        <Grid args={[50, 50]} sectionColor={'#0168f9'} cellColor={'#ff00e1'}/>
         {/* <Sphere color="white" amount={50} emissive='green' glow='lightgreen' position={[1, 1, -1]} /> */}
         {/* <Environment preset="city" ground={{ height: 5, radius: 40, scale: 20 }} /> */}
-        <ContactShadows renderOrder={2} color="black" resolution={1024} frames={1} scale={10} blur={1.5} opacity={0.65} far={0.5} />
-        <BakeShadows />
+        {/* <ContactShadows renderOrder={2} color="black" resolution={1024} frames={1} scale={10} blur={1.5} opacity={0.65} far={0.5} /> */}
+        {/* <BakeShadows /> */}
       </Canvas>
     </Suspense>
   )

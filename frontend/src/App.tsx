@@ -25,7 +25,7 @@ function App() {
               className='navi__container'
               sticky='scrollup'
               direction='row'
-              background="dark-1"
+              background="transparent"
               pad={{ vertical:'small', horizontal:'medium' }}>
               <Text size='medium'>h3nr7 . 3Fonts</Text>
               <Menu

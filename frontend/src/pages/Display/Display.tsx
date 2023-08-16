@@ -3,15 +3,15 @@ import { DisplayProps } from './Display.interface';
 import { Main } from 'grommet';
 import { useFont } from '../../hooks/useFont';
 import { useFontStore } from '../../stores/fontStore';
-import { FontLoader } from '../../three/loaders/FontLoader';
-import { LoadingManager } from 'three';
 
 
 export function Display({ }:PropsWithChildren<DisplayProps>) {
 
   const { setFont, setJson } = useFontStore();
   // const [f, error] = useFont('PTMono.woff2');
-  const [f, j, error] = useFont('PTMono.woff2', true);
+  // const [f, j, error] = useFont('PTMono.woff2', true);
+  // const [f, j, error] = useFont('RobotoMono-Medium.woff2', true);
+  const [f, j, error] = useFont('rift_medium_italic.woff', true);
 
   useEffect(() => {
     if(j && !error) setJson(j);
@@ -22,7 +22,6 @@ export function Display({ }:PropsWithChildren<DisplayProps>) {
     <Suspense>
       {error ? <>Error</> : (
         <Main className='display__container'>
-          hello world
         </Main>
       )}
     </Suspense>
