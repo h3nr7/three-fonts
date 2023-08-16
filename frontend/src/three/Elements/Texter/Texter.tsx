@@ -3,13 +3,13 @@ import { useFontStore } from "../../../stores/fontStore";
 import { TexterProps } from "./Texter.interface";
 
 
-export function Texter({ text = 'HENRY, MAY & COCOA', position }: TexterProps) {
+export function Texter({ text = 'HENRY, MAY & COCOA', position, ref }: TexterProps) {
 
-  const { font, json } = useFontStore();
+  const { json } = useFontStore();
 
-  return (
+  return json && (
     <Center position={position}>
-      <mesh castShadow>
+      <mesh ref={ref} castShadow>
         <textGeometry args={[text, { font: json, size: 1, height: 0.5, bevelEnabled: true, bevelSize: 0.01, bevelThickness: 0.05 }]}/>
         <meshNormalMaterial /> 
       </mesh>

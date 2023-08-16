@@ -58,8 +58,8 @@ function App() {
               </CSSTransition>
             </TransitionGroup>
           </Grid>
-          <ThreeFiber />
         </Theme>
+        <ThreeFiber />
       </FontStoreProvider>
     </ErrorBoundary>
   )

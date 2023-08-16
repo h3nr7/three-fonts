@@ -11,6 +11,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@react-three/cannon": "^6.5.2",
     "@react-three/drei": "^9.80.2",
     "@react-three/fiber": "^8.13.6",
     "grommet": "^2.33.1",
