@@ -11,14 +11,14 @@ import {
   TransitionGroup,
   CSSTransition
 } from "react-transition-group";
-import { FontStoreProvider } from './stores/fontStore';
+import { StoreProvider } from './stores/store';
 function App() {
 
   const navigate = useNavigate();
   const location = useLocation();
   return (
     <ErrorBoundary fallbackRender={({error}) => <>{error}</>}>
-      <FontStoreProvider>
+      <StoreProvider>
         <Theme>
           <Grid fill alignSelf='stretch' style={{ zIndex: 1, position: 'relative' }}>
             <Header 
@@ -60,7 +60,7 @@ function App() {
           </Grid>
         </Theme>
         <ThreeFiber />
-      </FontStoreProvider>
+      </StoreProvider>
     </ErrorBoundary>
   )
 }
