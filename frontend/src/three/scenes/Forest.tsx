@@ -12,9 +12,9 @@ export function Forest() {
     loadedModel.scene
   }
 
-  return !error && loadedModel && (
+  return !error && loadedModel ? (
     <group scale={100} position={[-3, 0.1, -2]}>
       <primitive object={loadedModel.scene}/> 
     </group>
-  );
+  ) : null;
 }

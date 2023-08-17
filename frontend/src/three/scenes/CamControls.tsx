@@ -34,8 +34,7 @@ export function CamControls() {
       <OrbitControls
         args={[camera, gl.domElement]}
         target={[0, 0, 0]}
-        autoRotateSpeed={0.85} 
-        zoomSpeed={0.75} 
+        // zoomSpeed={1.55} 
         minDistance={70}
         maxDistance={300}
         minPolarAngle={Math.PI / 2.5} 
