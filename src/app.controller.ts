@@ -6,10 +6,11 @@ import {
 } from '@nestjs/common';
 import { Readable } from 'node:stream'
 import { readdir, readFile } from 'node:fs/promises'
-import { AppService, convertFontToJson } from './app.service';
+import { AppService } from './app.service';
 import { FontResponse } from './app.interface';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { join } from 'node:path';
+import { convert } from './libs/Fontface';
 
 @Controller()
 export class AppController {
@@ -41,14 +42,18 @@ export class AppController {
 
   @Get('api/fonts/json')
   async getOneJson(
-    @Query('name') name:string
+    @Query('name') name:string,
+    @Query('reverse') reverse:string
   ) {
+
+    const isReverse = reverse && reverse.toLowerCase() === 'true';
+
     const filePath = join(__dirname, '..', 'public/fonts', name);
-    console.log('hahaha: ', filePath);
     const fileBuffer = await readFile(filePath);
     const fontJson = await this.appService.convertToFont(fileBuffer);
+    
     // return json string
-    return convertFontToJson(fontJson);
+    return convert(fontJson, isReverse);
   }
 
 

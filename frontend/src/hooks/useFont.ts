@@ -4,17 +4,17 @@ import { FontConvertError } from "../libs/Errors";
 import { LoadingManager } from "three";
 import { FontLoader } from "../three/loaders/FontLoader";
 
-export function useFont(name: string, isJson:boolean = false):[Font | undefined, any | undefined, FontConvertError | undefined] {
+export function useFont(name: string, isJson:boolean = false, isReverse?:boolean):[Font | undefined, any | undefined, FontConvertError | undefined] {
 
   const [json, setJson] = useState<any>();
   const [font, setFont] = useState<Font>();
   const [error, setErr] = useState<Error>();
 
-
+  
   useEffect(() => {
-    async function load() {
+    async function load(reverse:boolean = false) {
       try {
-        const url = `/api/fonts/${isJson ? 'json' : 'data'}?name=${name}`
+        const url = `/api/fonts/${isJson ? 'json' : 'data'}?name=${name}&reverse=${reverse}`
         const res = await fetch(url, {
           method: 'get',
           headers: {
@@ -38,7 +38,7 @@ export function useFont(name: string, isJson:boolean = false):[Font | undefined,
       }
     }
 
-    load();
+    load(isReverse);
   }, [name]);
 
   return [font, json, error];

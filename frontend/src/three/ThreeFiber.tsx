@@ -14,8 +14,7 @@ import { Physics, useBox } from '@react-three/cannon'
 import './ThreeFiber.interface';
 import { Speaker } from './scenes/Speaker';
 import { Typewriter } from './scenes/Typewriter';
-import { Phy } from '../phy';
-import { PhyBox } from '../phy/PhyBox';
+
 
 export function ThreeFiber() {
 
@@ -40,9 +39,6 @@ export function ThreeFiber() {
       <color args={['#ffffff']} attach='background' />
       <CamControls /> 
       <Suspense> 
-        <Phy>
-          <PhyBox name='hello'/>
-        </Phy>
         <Physics>
           <Speaker />
           <Typewriter />

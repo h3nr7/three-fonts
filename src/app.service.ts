@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { Font, parse } from 'opentype.js';
-import { convert } from './libs/font_json_converter';
 import { decompress } from 'wawoff2';
 import { fromBuffer } from 'file-type'
+
 @Injectable()
 export class AppService {
 
@@ -46,6 +46,3 @@ export class AppService {
 
 }
 
-export function convertFontToJson(font:Font) {
-  return  convert(font);
-}
